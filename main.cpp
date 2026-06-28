@@ -203,7 +203,7 @@ class Board {
         //Initialize board to null
         for (int i = 0; i < 8; i++)
         {
-           for (int j = 0; i < 8; i++)
+           for (int j = 0; j < 8; j++)
            {
            board[i][j]= nullptr;
            }
@@ -215,7 +215,7 @@ class Board {
         //Clean up pieces safely
           for (int i = 0; i < 8; i++)
         {
-           for (int j = 0; j < 8; i++)
+           for (int j = 0; j < 8; j++)
            {
          if  (board[i][j]!= nullptr){
             delete board[i][j]; 
@@ -381,11 +381,10 @@ vector<Position>getAllPiecesOfColor(Color color){
     }
 
 };
-
-//Piece Movement method
-vector<Position> King:: getPossibleMoves(Position  currentPos, Board* board ){
+// Now implement the piece movement methods
+vector<Position> King::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int directions[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
+    int directions[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
     
     for (int i = 0; i < 8; i++) {
         Position newPos(currentPos.getRow() + directions[i][0], currentPos.getCol() + directions[i][1]);
@@ -395,62 +394,62 @@ vector<Position> King:: getPossibleMoves(Position  currentPos, Board* board ){
     }
     return moves;
 }
-vector<Position> Queen:: getPossibleMoves(Position  currentPos, Board* board ){
+
+vector<Position> Queen::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int directions[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
+    int directions[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
     
     for (int d = 0; d < 8; d++) {
-        for(int i=0; i<8; i++){
-           Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
-        if (!newPos.isValid() ) break; 
-        if( board->isOccupiedBySameColor(newPos, this->color)) break;
+        for (int i = 1; i < 8; i++) {
+            Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
+            if (!newPos.isValid()) break;
 
+            if (board->isOccupiedBySameColor(newPos, this->color)) break;
 
-            moves.push_back(newPos);  
-            if(board->isOccupied(newPos)) break; //stop after capturing
-        }       
+            moves.push_back(newPos);
+            if (board->isOccupied(newPos)) break; // Stop after capturing
+        }
     }
     return moves;
 }
 
-vector<Position> Rook:: getPossibleMoves(Position  currentPos, Board* board ){
+vector<Position> Rook::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int directions[4][2] = { {-1,0},  {0,-1}, {0,1},  {1,0}};
+    int directions[4][2] = {{-1,0}, {1,0}, {0,-1}, {0,1}};
     
     for (int d = 0; d < 4; d++) {
-        for(int i=0; i<8; i++){
-           Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
-        if (!newPos.isValid() ) break; 
-        if( board->isOccupiedBySameColor(newPos, this->color)) break;
+        for (int i = 1; i < 8; i++) {
+            Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
+            if (!newPos.isValid()) break;
 
+            if (board->isOccupiedBySameColor(newPos, this->color)) break;
 
-            moves.push_back(newPos);  
-            if(board->isOccupied(newPos)) break; //stop after capturing
-        }       
+            moves.push_back(newPos);
+            if (board->isOccupied(newPos)) break;
+        }
     }
     return moves;
 }
 
-vector<Position> Bishop:: getPossibleMoves(Position  currentPos, Board* board ){
+vector<Position> Bishop::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int directions[4][2] = {{-1,-1},  {-1,1},  {1,-1}, {1,1}};
+    int directions[4][2] = {{-1,-1}, {-1,1}, {1,-1}, {1,1}};
     
     for (int d = 0; d < 4; d++) {
-        for(int i=0; i<8; i++){
-           Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
-        if (!newPos.isValid() ) break; 
-        if( board->isOccupiedBySameColor(newPos, this->color)) break;
-
-
-            moves.push_back(newPos);  
-            if(board->isOccupied(newPos)) break; //stop after capturing
-        }       
+        for (int i = 1; i < 8; i++) {
+            Position newPos(currentPos.getRow() + directions[d][0]*i, currentPos.getCol() + directions[d][1]*i);
+            if (!newPos.isValid()) break;
+            if (board->isOccupiedBySameColor(newPos, this->color)) break;
+            moves.push_back(newPos);
+            if (board->isOccupied(newPos)) break;
+        }
     }
     return moves;
 }
-vector<Position> Knight:: getPossibleMoves(Position  currentPos, Board* board ){
+
+vector<Position> Knight::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int knightMoves[8][2] = {{-2,-1}, {-2,1}, {2,1}, {2,-1}, {1,-2}, {1,2}, {-1,2}, {-1,-2}};
+    int knightMoves[8][2] = {{-2,-1}, {-2,1}, {-1,-2}, {-1,2}, {1,-2}, {1,2}, {2,-1}, {2,1}};
     
     for (int i = 0; i < 8; i++) {
         Position newPos(currentPos.getRow() + knightMoves[i][0], currentPos.getCol() + knightMoves[i][1]);
@@ -460,24 +459,26 @@ vector<Position> Knight:: getPossibleMoves(Position  currentPos, Board* board ){
     }
     return moves;
 }
-vector<Position> Pawn:: getPossibleMoves(Position  currentPos, Board* board ){
+
+vector<Position> Pawn::getPossibleMoves(Position currentPos, Board* board) {
     vector<Position> moves;
-       int direction = (color==WHITE) ? -1:1;;
-
-       //Fwd Move
-    Position oneStep(currentPos.getRow()+ direction, currentPos.getCol());
-    if(oneStep.isValid() && !board->isOccupied(oneStep)){
+    int direction = (color == WHITE) ? -1 : 1;
+    
+    // Forward move
+    Position oneStep(currentPos.getRow() + direction, currentPos.getCol());
+    if (oneStep.isValid() && !board->isOccupied(oneStep)) {
         moves.push_back(oneStep);
-
-        //2 steps from initial pos
-        if(!hasMoved){
-                Position twoStep(currentPos.getRow()+ 2*direction, currentPos.getCol());
-    if(twoStep.isValid() && !board->isOccupied(twoStep)){
-        moves.push_back(twoStep);
+        
+        // Double move from starting position
+        if (!hasMoved) {
+            Position twoStep(currentPos.getRow() + 2*direction, currentPos.getCol());
+            if (twoStep.isValid() && !board->isOccupied(twoStep)) {
+                moves.push_back(twoStep);
+            }
         }
     }
-
-    //Diagonal capture
+    
+    // Diagonal captures
     Position leftCapture(currentPos.getRow() + direction, currentPos.getCol() - 1);
     Position rightCapture(currentPos.getRow() + direction, currentPos.getCol() + 1);
     
@@ -490,10 +491,9 @@ vector<Position> Pawn:: getPossibleMoves(Position  currentPos, Board* board ){
         !board->isOccupiedBySameColor(rightCapture, this->color)) {
         moves.push_back(rightCapture);
     }
-    }
+    
     return moves;
 }
-
 //Rule book
 
 class ChessRules {
@@ -711,6 +711,7 @@ class Match :  public ChatMediator{
     vector<Message*> chatHistory;
 
 public:
+
 Match(string mId, User* white, User* black){
     matchId = mId;
     whitePlayer= white;
@@ -828,6 +829,9 @@ bool makeMove(Position from, Position to, User* player){
     Board* getBoard() const { 
         return board; 
     }
+    Color getCurrentTurn() const {
+    return currentTurn;
+}
 };
 //Matching strategy
 class MatchingStrategy{
@@ -931,6 +935,7 @@ static GameManager* getInstance(){
             Match* match = activeMatches[matchId];
             Message* msg = new Message(user->getId(), message);
             match->sendMessage(msg, user);
+            delete msg;
         }
     }
     
@@ -1004,38 +1009,170 @@ public:
         delete rohit;
     }
 };
-
-//Main function
-
-int main(){
-    cout<< "=== Welcome to STRATAGEM ===" << endl;
-    //test run 
-    ChessSystemDemo::demonstrateScholarsMate();
-    // Demonstrate Game Manager functionality
-    cout << "\n=== Game Manager Demo ===" << endl;
-    GameManager* gm = GameManager::getInstance();
-    
-    User* saurav = new User("USER_1", "Saurav");
-    User* manish = new User("USER_2", "Manish");
-    User* abhishek = new User("USER_3", "Abishek");
-    
-    cout << "\nUsers: " << saurav->toString() << ", " << manish->toString() << ", " << abhishek->toString() << endl;
-    
-    // Request matches
-    gm->requestMatch(saurav);
-    gm->requestMatch(manish);  // Should create a match
-    gm->requestMatch(abhishek); // Should go to waiting list
-    
-    gm->displayActiveMatches();
-    
-    // Clean up
-    delete saurav;
-    delete manish;
-    delete abhishek;
-    
-    // Clean up singleton instance
-    delete GameManager::getInstance();    
-    return 0;
-
+// Helper function to convert chess notation to Position
+Position chessToPosition(string s) {
+    int col = s[0] - 'a';
+    int row = '8' - s[1];
+    return Position(row, col);
 }
 
+
+void playChess() {
+
+
+    string whiteName, blackName;
+
+    cout << "Enter White Player Name: ";
+    cin >> whiteName;
+
+    cout << "Enter Black Player Name: ";
+    cin >> blackName;
+
+    User* white = new User("P1", whiteName);
+    User* black = new User("P2", blackName);
+
+    Match match("GAME_1", white, black);
+
+    match.getBoard()->display();
+    string from,to;
+while (match.getStatus() == IN_PROGRESS) {
+
+   if (match.getCurrentTurn() == WHITE)
+    cout << "\nWhite (" << white->getName() << ") move: ";
+else
+    cout << "\nBlack (" << black->getName() << ") move: ";
+    cin >> from >> to;
+
+    Position start = chessToPosition(from);
+    Position end = chessToPosition(to);
+
+    User* currentPlayer;
+
+    if (match.getCurrentTurn() == WHITE)
+        currentPlayer = white;
+    else
+        currentPlayer = black;
+
+    match.makeMove(start, end, currentPlayer);
+}
+delete white;
+delete black;
+
+}
+void gameManagerDemo() {
+
+    GameManager* manager = GameManager::getInstance();
+
+    int n;
+
+    cout << "\nHow many players? ";
+    cin >> n;
+
+    vector<User*> players;
+
+    for (int i = 0; i < n; i++) {
+
+        string name;
+
+        cout << "Enter Player " << i + 1 << " Name: ";
+        cin >> name;
+
+        User* player = new User("P" + to_string(i + 1), name);
+
+        players.push_back(player);
+    }
+
+    cout << "\nSearching for matches...\n\n";
+
+    for (User* player : players)
+        manager->requestMatch(player);
+
+    manager->displayActiveMatches();
+}
+void chatDemo() {
+
+    string name1, name2;
+
+    cout << "Enter White Player Name: ";
+    cin >> name1;
+
+    cout << "Enter Black Player Name: ";
+    cin >> name2;
+
+    User* white = new User("P1", name1);
+    User* black = new User("P2", name2);
+
+    Match match("CHAT_MATCH", white, black);
+
+    cout << "\nType 'exit' to end chat.\n";
+
+    while (true) {
+
+        string message;
+
+        cout << "\n" << white->getName() << ": ";
+
+        getline(cin >> ws, message);
+
+        if (message == "exit")
+            break;
+
+        white->send(new Message(white->getId(), message));
+
+        cout << "\n" << black->getName() << ": ";
+
+        getline(cin >> ws, message);
+
+        if (message == "exit")
+            break;
+
+        black->send(new Message(black->getId(), message));
+    }
+
+    delete white;
+    delete black;
+}
+
+//Main function
+int main() {
+
+    cout << "====== STRATAGEM ======\n";
+
+    while (true) {
+
+        cout << "\n1. Play Chess\n";
+        cout << "2. Scholar's Mate Demo\n";
+        cout << "3. Game Manager Demo\n";
+        cout << "4. Game Chat Demo\n";
+        cout << "5. Exit\n";
+
+        cout << "\nEnter Choice: ";
+
+        int choice;
+        cin >> choice;
+
+        switch(choice){
+
+        case 1:
+            playChess();
+            break;
+
+        case 2:
+            ChessSystemDemo::demonstrateScholarsMate();
+            break;
+
+        case 3:
+             gameManagerDemo();
+            break;
+
+        case 4:
+        chatDemo();
+           break;
+
+            case 5: 
+            return 0;
+        default:
+            cout << "Invalid Choice\n";
+        }
+    }
+}
