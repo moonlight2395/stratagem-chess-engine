@@ -17,7 +17,7 @@ STRATAGEM is a fully playable, multi-featured C++ chess engine built on a founda
 * **Concurrent Match Orchestration** — A GameManager Singleton maintains a map<string, Match*> of live sessions, routing player actions to isolated Match instances via unique match IDs, with no shared mutable state between games.
 * **Polymorphic Move Generation** — An abstract Piece base class enforces a pure virtual getPossibleMoves() contract; each subclass (King, Queen, Rook, Bishop, Knight, Pawn) encodes its own movement vectors, letting the rules engine call uniform logic without type-switching.
 * **Simulated Look-Ahead Validation** — wouldMoveCauseCheck() performs in-place board mutation (remove → place → evaluate → rollback) to detect pins, discovered checks, and illegal king exposures without cloning board state.
-* **Decoupled Chat via Mediator** — Match implements ChatMediator; User objects hold only a ChatMediator* pointer, never a peer reference — routing all messages through the match lifecycle with zero inter-player coupling.
+* **Decoupled Chat via Mediator** — Match implements ChatMediator; User objects hold only a ChatMediator* pointer, never a peer reference, routing all messages through the match lifecycle with zero inter-player coupling.
 * **Score-Tolerance Matchmaking** — ScoreBasedMatching implements a pluggable MatchingStrategy interface, scanning the waiting queue for the closest opponent within a configurable Elo-style tolerance window.
 
 ## 📂 Project Structure
@@ -32,6 +32,7 @@ stratagem/
 ├── ChessRules.h / .cpp     # isValidMove, wouldMoveCauseCheck, isInCheck / Checkmate / Stalemate
 ├── Match.h / Match.cpp     # Turn state, moveHistory, ChatMediator implementation, score updates
 └── GameManager.h / .cpp    # Singleton orchestrator, activeMatches map, matchmaking queue
+```
 
 
 ## 📋 Table of Contents
