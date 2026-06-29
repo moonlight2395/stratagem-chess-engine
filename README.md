@@ -131,8 +131,8 @@ STRATAGEM's architecture is organized into four logical layers:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/stratagem.git
-cd stratagem
+git clone https://github.com/moonlight2395/stratagem-chess-engine.git
+cd stratagem-chess-engine
 
 # Compile with g++
 g++ -std=c++17 -O2 -o stratagem main.cpp
@@ -272,17 +272,6 @@ The game isn't over — these features are queued for future development:
 - [ ] **Unit test suite** using Google Test
 
 ---
-
-## 🤝 The Credits — Contributing
-
-Contributions, suggestions, and forks are welcome!
-
-```bash
-# Fork → Clone → Branch → Commit → PR
-git checkout -b feature/en-passant
-git commit -m "feat: implement en passant capture logic"
-git push origin feature/en-passant
-```
 
 Please follow the existing code style — clean headers, encapsulated state, and extend through abstraction rather than modification.
 
