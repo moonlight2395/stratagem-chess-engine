@@ -1,4 +1,10 @@
-# Stratagem: Object-Oriented Chess Engine
+# ♟️ STRATAGEM:  Object-Oriented Chess Engine
+
+![C++](https://img.shields.io/badge/C%2B%2B-17-blue?logo=c%2B%2B)
+![OOP](https://img.shields.io/badge/OOP-Project-success)
+![Design Patterns](https://img.shields.io/badge/Design%20Patterns-Factory%20%7C%20Singleton%20%7C%20Strategy%20%7C%20Mediator-orange)
+![Platform](https://img.shields.io/badge/Platform-Console-lightgrey)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 A high-performance, headless chess simulation engine built from scratch in C++. This project focuses purely on low-level platform design, clean Object-Oriented Programming (OOP) inheritance, and machine-coding interview standards, deliberately avoiding generic frontend wrappers.
 
