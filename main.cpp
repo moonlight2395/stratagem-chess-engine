@@ -773,6 +773,30 @@ bool makeMove(Position from, Position to, User* player){
         }
         return true;
     }
+    void undoMove() {
+
+    if (moveHistory.empty()) {
+        cout << "No moves to undo.\n";
+        return;
+    }
+
+    Move lastMove = moveHistory.back();
+    moveHistory.pop_back();
+
+    Piece* piece = board->getPiece(lastMove.getTo());
+
+    board->removePiece(lastMove.getTo());
+    board->placePiece(lastMove.getFrom(), piece);
+
+    if (lastMove.getCapturedPiece() != nullptr) {
+        board->placePiece(lastMove.getTo(), lastMove.getCapturedPiece());
+    }
+
+    currentTurn = (currentTurn == WHITE) ? BLACK : WHITE;
+
+    cout << "Last move undone.\n";
+    board->display();
+}
 
     void quitGame(User* player){
         User* opponent = (player == whitePlayer)? blackPlayer : whitePlayer;
@@ -1016,9 +1040,7 @@ Position chessToPosition(string s) {
     return Position(row, col);
 }
 
-
 void playChess() {
-
 
     string whiteName, blackName;
 
@@ -1034,30 +1056,48 @@ void playChess() {
     Match match("GAME_1", white, black);
 
     match.getBoard()->display();
-    string from,to;
-while (match.getStatus() == IN_PROGRESS) {
 
-   if (match.getCurrentTurn() == WHITE)
-    cout << "\nWhite (" << white->getName() << ") move: ";
-else
-    cout << "\nBlack (" << black->getName() << ") move: ";
-    cin >> from >> to;
+    string from, to;
 
-    Position start = chessToPosition(from);
-    Position end = chessToPosition(to);
+    while (match.getStatus() == IN_PROGRESS) {
 
-    User* currentPlayer;
+        if (match.getCurrentTurn() == WHITE)
+            cout << "\nWhite (" << white->getName()
+                 << ") move (or type 'undo'): ";
+        else
+            cout << "\nBlack (" << black->getName()
+                 << ") move (or type 'undo'): ";
 
-    if (match.getCurrentTurn() == WHITE)
-        currentPlayer = white;
-    else
-        currentPlayer = black;
+        cin >> from;
 
-    match.makeMove(start, end, currentPlayer);
-}
-delete white;
-delete black;
+        // Undo last move
+        if (from == "undo") {
+            match.undoMove();
+            continue;
+        }
 
+        cin >> to;
+
+        Position start = chessToPosition(from);
+        Position end = chessToPosition(to);
+
+        if (!start.isValid() || !end.isValid()) {
+            cout << "Invalid move format! Use e2 e4\n";
+            continue;
+        }
+
+        User* currentPlayer;
+
+        if (match.getCurrentTurn() == WHITE)
+            currentPlayer = white;
+        else
+            currentPlayer = black;
+
+        match.makeMove(start, end, currentPlayer);
+    }
+
+    delete white;
+    delete black;
 }
 void gameManagerDemo() {
 
