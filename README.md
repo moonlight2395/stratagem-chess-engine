@@ -169,17 +169,30 @@ Enter Choice:
 
 ```
 Enter Choice: 1
-Enter White Player Name: Aditya
-Enter Black Player Name: Rohit
-
+Enter White Player Name: A
+Enter Black Player Name: B
+Match started between A (White) and B (Black)
   +---+---+---+---+---+---+---+---+
   | a | b | c | d | e | f | g | h |
   +---+---+---+---+---+---+---+---+
 8 |BR |BN |BB |BQ |BK |BB |BN |BR | 8
   +---+---+---+---+---+---+---+---+
-...
-
-White (Aditya) move (or type 'undo'): e2 e4
+7 |BP |BP |BP |BP |BP |BP |BP |BP | 7
+  +---+---+---+---+---+---+---+---+
+6 |   |   |   |   |   |   |   |   | 6
+  +---+---+---+---+---+---+---+---+
+5 |   |   |   |   |   |   |   |   | 5
+  +---+---+---+---+---+---+---+---+
+4 |   |   |   |   |   |   |   |   | 4
+  +---+---+---+---+---+---+---+---+
+3 |   |   |   |   |   |   |   |   | 3
+  +---+---+---+---+---+---+---+---+
+2 |WP |WP |WP |WP |WP |WP |WP |WP | 2
+  +---+---+---+---+---+---+---+---+
+1 |WR |WN |WB |WQ |WK |WB |WN |WR | 1
+  +---+---+---+---+---+---+---+---+
+  | a | b | c | d | e | f | g | h |
+  +---+---+---+---+---+---+---+---+
 ```
 
 ### Move Format
