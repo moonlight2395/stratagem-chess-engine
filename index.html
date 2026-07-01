@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stratagem Chess</title>
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+</head>
+<body>
+
+    <div id="myBoard" style="width: 400px; margin: auto; margin-top: 50px;"></div>
+    <h3 id="status" style="text-align: center;">Loading Engine...</h3>
+
+    <script>
+        var board = null;
+        const BACKEND_URL = 'http://localhost:18080';
+
+        // When a user drags and drops a piece on the website UI
+        function onDrop (source, target, piece, newPos, oldPos, orientation) {
+            // Send the move to your C++ engine backend
+            $.ajax({
+                url: BACKEND_URL + '/make-move',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ from: source, to: target }),
+                success: function (data) {
+                    let res = JSON.parse(data);
+                    if (!res.success) {
+                        // Snap the piece back if your C++ engine says it's illegal!
+                        return 'snapback';
+                    }
+                    updateStatus();
+                }
+            });
+        }
+
+        function updateStatus() {
+            // Fetch current turn and game conditions from C++ server
+            $.get(BACKEND_URL + '/board-state', function(data) {
+                let state = JSON.parse(data);
+                $('#status').html('Turn: ' + (state.turn === 'w' ? 'White' : 'Black'));
+            });
+        }
+
+        // Initialize Chessboard.js configured to track drag/drops
+        var config = {
+            draggable: true,
+            position: 'start',
+            onDrop: onDrop
+        }
+        board = Chessboard('myBoard', config);
+        updateStatus();
+    </script>
+</body>
+</html>
